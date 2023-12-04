@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block titulo %} Editar Perfil {% endblock %}
+
+{% block contenido %}
+<div class="container text-center" style="max-width: 400px; margin: 0 auto; padding-top: 100px;">
+    <div class="card">
+        <div class="card-header" style="background-color: #965695; color: white;">
+            <h3 class="card-title">Editar Perfil</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">Nombre de usuario</label>
+                    <input type="text" class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.descripcion.id_for_label }}" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="{{ form.descripcion.id_for_label }}" name="{{ form.descripcion.name }}"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.foto_de_perfil.id_for_label }}" class="form-label">Foto de perfil</label>
+                    <input type="file" class="form-control" id="{{ form.foto_de_perfil.id_for_label }}" name="{{ form.foto_de_perfil.name }}">
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" style="background-color: #965695; color: white;">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

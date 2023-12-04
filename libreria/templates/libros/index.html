@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista de libros {% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="color: #965695;">Agregar un Libro</h1>
+</div>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header" style="background-color: #965695;">
+            <a class="btn btn-light" href="{% url 'crear' %}" role="button">
+                <i class="bi bi-plus"></i> Agregar nuevo libro
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Imagen</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for libro in libros %}
+                            <tr>
+                                <td>{{ libro.id }}</td>
+                                <td>{{ libro.titulo }}</td>
+                                <td>
+                                    <img src="{{ libro.imagen.url }}" height="100" alt="{{ libro.titulo }}" />
+                                </td>
+                                <td>{{ libro.descripcion }}</td>
+                                <td>${{ libro.precio }}</td>
+                                <td>
+                                    <a class="btn" style="background-color: #965695; color: white;" href="{% url 'editar' libro.id %}" role="button">
+                                        <i class="bi bi-pencil"></i> Editar
+                                    </a>
+                                    |
+                                    <a class="btn" style="background-color: #c2a0ce; color: white;" href="{% url 'eliminar' libro.id %}" role="button">
+                                        <i class="bi bi-trash"></i> Borrar
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-muted" style="background-color: #965695;">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

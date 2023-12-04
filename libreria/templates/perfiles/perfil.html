@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block titulo %} Perfil {% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="color: #965695;">Perfil de Usuario</h1>
+    
+    <div class="card">
+        {% if user.perfil.foto_de_perfil %}
+            <img src="{{ user.perfil.foto_de_perfil.url }}" alt="Foto de perfil" class="card-img-top rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title" style="color: #965695;">{{ user.username }}</h5>
+            <p class="card-text">Correo electrónico: {{ user.email }}</p>
+            {% if user.perfil.descripcion %}
+                <p class="card-text">{{ user.perfil.descripcion }}</p>
+            {% endif %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="{% url 'cambiar_contrasena' %}" class="btn" style="background-color: #9f15b6; color: white;">Cambiar Contraseña</a>
+                <a href="{% url 'editar_perfil' %}" class="btn" style="background-color: #9f15b6; color: white;">Editar Perfil</a>
+                <a href="{% url 'cerrarSesion' %}" class="btn" style="background-color: #9f15b6; color: white;">Cerrar Sesión</a>
+            </div>
+
+            {% if user.is_staff %}
+                <h5 class="card-title mt-4" style="color: #965695;">Usuarios Registrados:</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered"> 
+                        <thead class="">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre de Usuario</th>
+                                <th>Correo Electrónico</th>
+                                <th>Es Administrador</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for usuario in usuarios %}
+                                <tr>
+                                    <td>{{ usuario.id }}</td>
+                                    <td>{{ usuario.username }}</td>
+                                    <td>{{ usuario.email }}</td>
+                                    <td>{% if usuario.is_staff %} Sí {% else %} No {% endif %}</td>
+                                    <td>
+                                        <a href="#" class="btn" style="background-color: #965695; color: white;">
+                                            <i class="bi bi-pencil"></i> Editar
+                                        </a>
+                                        |
+                                        <a href="{% url 'eliminar_usuario' usuario.id %}" class="btn" style="background-color: #c2a0ce; color: white;">
+                                            <i class="bi bi-trash"></i> Borrar
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="5">No hay usuarios registrados.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

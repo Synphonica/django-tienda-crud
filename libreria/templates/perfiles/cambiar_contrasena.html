@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block titulo %} Cambiar Contraseña {% endblock %}
+
+{% block contenido %}
+<div class="container text-center" style="max-width: 400px; margin: 0 auto; padding-top: 100px;">
+    <div class="card">
+        <div class="card-header" style="background-color: #965695; color: white;">
+            <h3 class="card-title">Cambiar Contraseña</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="{{ form.old_password.id_for_label }}" class="form-label">Contraseña actual</label>
+                    <input type="password" class="form-control" id="{{ form.old_password.id_for_label }}" name="{{ form.old_password.name }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.new_password1.id_for_label }}" class="form-label">Nueva contraseña</label>
+                    <input type="password" class="form-control" id="{{ form.new_password1.id_for_label }}" name="{{ form.new_password1.name }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.new_password2.id_for_label }}" class="form-label">Confirmar nueva contraseña</label>
+                    <input type="password" class="form-control" id="{{ form.new_password2.id_for_label }}" name="{{ form.new_password2.name }}" required>
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" style="background-color: #965695; color: white;">Cambiar Contraseña</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

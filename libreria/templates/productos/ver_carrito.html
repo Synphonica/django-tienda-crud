@@ -1,0 +1,54 @@
+<!-- productos/ver_carrito.html -->
+
+{% extends "base.html" %}
+
+{% block titulo %} Mi Carrito {% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="color: #965695;">Mi Carrito</h1>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Libro</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio Unitario</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in carrito %}
+                    <tr>
+                        <td>{{ item.libro.titulo }}</td>
+                        <td>
+                            <img src="{{ item.libro.imagen.url }}" alt="{{ item.libro.titulo }}" style="max-height: 50px;">
+                        </td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>${{ item.libro.precio }}</td>
+                        <td>${{ item.get_total_item_price }}</td>
+                        <td>
+                            <a href="{% url 'agregar_producto' item.libro.id %}" class="btn btn-sm" style="background-color: #965695; color: white;">+</a>
+                            <a href="{% url 'eliminar_producto' item.libro.id %}" class="btn btn-sm" style="background-color: #c2a0ce; color: white;">-</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6">Tu carrito está vacío</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4"></td>
+                    <td>${{ total_carrito }}</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+<!-- crear.html -->
+<form enctype="multipart/form-data" method="post">
+  {% csrf_token %} 
+
+  {% for campo in formulario %}
+      <div class="mb-3">
+          <label for="" class="form-label">{{ campo.label }}</label>
+          {% if campo.field.widget.input_type == 'file' and campo.value %}
+              <br/>
+              <img src="{{ MEDIA_URL }}/imagenes/{{ campo.value }}" width="100" alt="" srcset="">
+              <br/>
+          {% endif %}
+          {% if campo.name == 'precio' %}
+              <input 
+                  type="number"
+                  class="form-control" 
+                  name="{{ campo.name }}" 
+                  id="" 
+                  aria-describedby="helpId" 
+                  placeholder="{{ campo.label }}"
+                  value="{{ campo.value | default:'' }}"
+                  step="0.01" 
+              >
+          {% else %}
+              <input 
+                  type="{{ campo.field.widget.input_type }}"
+                  class="form-control" 
+                  name="{{ campo.name }}" 
+                  id="" 
+                  aria-describedby="helpId" 
+                  placeholder="{{ campo.label }}"
+                  value="{{ campo.value | default:'' }}"
+              >
+          {% endif %}
+      </div>
+      <div class="col-12 help-text"> {{ campo.errors }} </div> 
+  {% endfor %}    
+
+  <input name="" id="" class="btn" type="submit" value="Enviar información" style="background-color: #965695; color: white;">
+  <a name="" id="" class="btn" href="{% url 'libros' %}" role="button" style="background-color: #c2a0ce; color: white;" >Cancelar</a>
+</form>

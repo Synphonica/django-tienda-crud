@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block titulo %} Registrarse {% endblock %}
+
+{% block contenido %}
+
+<div class="container text-center" style="max-width: 600px; margin: 0 auto; padding-top: 100px;">
+    <div class="card">
+        <div class="card-header" style="background-color: #c2a0ce; color: white;">
+            <h3 class="card-title">Registrarse</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+    
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{{ field.errors.0 }}</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+    
+                <div class="mb-4">
+                    <input type="text" class="form-control" id="{{ form.username.id_for_label }}" placeholder="Nombre de Usuario" aria-label="Nombre de Usuario" name="{{ form.username.name }}" required>
+                </div>
+                
+                <div class="mb-4">
+                    <input type="email" class="form-control" id="{{ form.email.id_for_label }}" placeholder="Correo Electrónico" aria-label="Correo Electrónico" name="{{ form.email.name }}" required>
+                </div>
+                
+                <div class="mb-4">
+                    <input type="password" class="form-control" id="{{ form.password1.id_for_label }}" placeholder="Contraseña" aria-label="Contraseña" name="{{ form.password1.name }}" required>
+                </div>
+                
+                <div class="mb-4">
+                    <input type="password" class="form-control" id="{{ form.password2.id_for_label }}" placeholder="Confirmar Contraseña" aria-label="Confirmar Contraseña" name="{{ form.password2.name }}" required>
+                </div>
+                <!-- Nuevo campo para seleccionar si el usuario es administrador -->
+                <div class="mb-4 form-check">
+                    <input type="checkbox" class="form-check-input" id="{{ form.is_staff.id_for_label }}" name="{{ form.is_staff.name }}">
+                    <label class="form-check-label" for="{{ form.is_staff.id_for_label }}">Administrador</label>
+                </div>
+                
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" style="background-color: #965695; color: white; font-size: 20px;">Registrarse</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center">
+            ¿Ya tienes una cuenta? <a href="{% url 'iniciarSesion' %}" style="color: blue;">Iniciar Sesión</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

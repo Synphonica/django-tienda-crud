@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block titulo %} Listado de Libros {% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="color: #965695;">Listado de Libros</h1>
+    <div class="row">
+        {% for libro in libros %}
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card">
+                    {% if libro.imagen %}
+                        <img src="{{ libro.imagen.url }}" class="card-img-top img-fluid" alt="{{ libro.titulo }}" style="width: 300px; height: 400px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ libro.titulo }}</h5>
+                        <p class="card-text">{{ libro.descripcion }}</p>
+                    </div>
+                    <div class="card-footer text-center" style="background-color: #965695;">
+                        <a href="{% url 'detalle_libro' libro.id %}" class="btn btn-light">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

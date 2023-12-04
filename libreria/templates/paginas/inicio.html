@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista de libros {% endblock %}
+
+{% load static %}
+
+{% block contenido %}
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="display-4" style="color: #965695;">¡Bienvenidos a mi tienda de libros en línea!</h1>
+        <p class="lead">Explora nuestra colección de libros y encuentra tu próxima lectura favorita.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-4">
+        <h2 style="color: #965695;">Explora una amplia selección de libros</h2>
+        <p>Descubre una variedad de géneros y autores para satisfacer tus intereses literarios.</p>
+      </div>
+      <div class="col-md-4">
+        <h2 style="color: #965695;">Regístrate para obtener beneficios</h2>
+        <p>Crea una cuenta para recibir recomendaciones personalizadas y ofertas especiales.</p>
+      </div>
+      <div class="col-md-4">
+        <h2 style="color: #965695;">Contacta con nosotros para más información</h2>
+        <p>Si tienes alguna pregunta o necesitas asistencia, nuestro equipo está aquí para ayudarte.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 style="color: #965695;">Nuestros libros más populares</h2>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card" style="border: none;">
+          <div class="d-flex">
+            <img src="{% static 'Libro1.webp' %}" class="card-img-top" alt="Libro 1" style="width: 150px; height: 150px;">
+            <div class="card-body">
+              <h5 class="card-title" style="color: #965695;">Libro de aventuras</h5>
+              <p class="card-text">Sumérgete en una emocionante aventura literaria con este libro.</p>
+              <a href="#" class="btn btn-link" style="color: #965695;">Ver detalles</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" style="border: none;">
+          <div class="d-flex">
+            <img src="{% static 'Libro2.webp' %}" class="card-img-top" alt="Libro 2" style="width: 150px; height: 150px;">
+            <div class="card-body">
+              <h5 class="card-title" style="color: #965695;">Libro de ciencia ficción</h5>
+              <p class="card-text">Explora mundos futuristas con este libro de ciencia ficción.</p>
+              <a href="#" class="btn btn-link" style="color: #965695;">Ver detalles</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card" style="border: none;">
+          <div class="d-flex">
+            <img src="{% static 'Libro3.webp' %}" class="card-img-top" alt="Libro 3" style="width: 150px; height: 150px;">
+            <div class="card-body">
+              <h5 class="card-title" style="color: #965695;">Libro de misterio</h5>
+              <p class="card-text">Descubre los secretos ocultos en esta intrigante historia de misterio.</p>
+              <a href="#" class="btn btn-link" style="color: #965695;">Ver detalles</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

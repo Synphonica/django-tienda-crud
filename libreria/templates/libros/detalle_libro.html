@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block titulo %} Detalles del Libro {% endblock %}
+
+{% block contenido %}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="col-md-3">
+                {% if libro.imagen %}
+                    <img src="{{ libro.imagen.url }}" class="card-img" alt="{{ libro.titulo }}">
+                {% endif %}
+            </div>
+            <div class="col-md-7">
+                <div class="card-body">
+                    <h1 class="mb-4" style="color: #965695;">{{ libro.titulo }}</h1>
+                    <p class="card-text">{{ libro.descripcion }}</p>
+                    <p class="card-text">Precio: {{ libro.precio }}</p>
+                    <a href="{% url 'agregar_producto' libro.id %}" class="btn btn-light mb-2" style="background-color: #965695; color: white;">Agregar al carrito</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="comentario" style="color: #965695; font-weight: bold;">Agregar Comentario</label>
+                        {{ form.texto.errors }}
+                        <textarea class="form-control" id="comentario" name="texto" rows="4" placeholder="Escribe tu comentario aquí" style="color: #555;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="puntuacion" style="color: #965695; font-weight: bold;">Puntuación</label>
+                        {{ form.puntuacion.errors }}
+                        <div id="stars" class="star-rating mb-2">
+                            {% for i in "12345"|make_list %}
+                                <span class="bi bi-star star" data-value="{{i}}" onclick="setRating({{i}})"></span>
+                            {% endfor %}
+                            <input type="hidden" class="form-control mb-4" id="puntuacion" name="puntuacion">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="background-color: #965695; color: white;">Agregar Comentario</button>
+                </form>
+            </div>
+        </div>
+
+        {% for comentario in comentarios %}
+            <div class="card mb-4 border-dark">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">{{ comentario.usuario.username }}</h5>
+                    <div class="stars" id="stars_{{ forloop.counter }}">
+                        {% for i in "12345"|make_list %}
+                            {% if i <= comentario.puntuacion %}
+                                <span class="bi bi-star text-warning"></span>
+                            {% else %}
+                                <span class="bi bi-star text-muted"></span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ comentario.texto }}</p>
+                    <p class="card-text">{{ comentario.usuario.username }} calificó este libro con {{ comentario.puntuacion }} estrellas.</p>
+                    {% if request.user == comentario.usuario %}
+                        <form method="post" action="{% url 'eliminar_comentario' comentario.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn" style="background-color: #c2a0ce; color: white;">Eliminar Comentario</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Añade este bloque de JavaScript en tu archivo -->
+<script>
+    var selectedRating = 0;
+
+    function setRating(value) {
+        selectedRating = value;
+        document.getElementById('puntuacion').value = value;
+        var stars = document.querySelectorAll('#stars .star');
+        for (var i = 0; i < stars.length; i++) {
+            if (i < value) {
+                stars[i].classList.add('text-warning');
+            } else {
+                stars[i].classList.remove('text-warning');
+            }
+        }
+    }
+
+    var stars = document.querySelectorAll('#stars .star');
+    for (var i = 0; i < stars.length; i++) {
+        stars[i].addEventListener('mouseover', function() {
+            var onStar = parseInt(this.getAttribute('data-value'));
+            for (var j = 0; j < stars.length; j++) {
+                if (j < onStar) {
+                    stars[j].classList.add('text-warning');
+                } else {
+                    stars[j].classList.remove('text-warning');
+                }
+            }
+        });
+
+        // Añade esta parte para manejar el evento mouseout
+        stars[i].addEventListener('mouseout', function() {
+            for (var j = 0; j < stars.length; j++) {
+                if (j < selectedRating) {
+                    stars[j].classList.add('text-warning');
+                } else {
+                    stars[j].classList.remove('text-warning');
+                }
+            }
+        });
+    }
+</script>
+
+{% endblock %}

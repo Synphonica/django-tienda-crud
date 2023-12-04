@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block titulo %} Nosotros {% endblock %}
+
+{% block contenido %}
+  {% load static %}
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="display-4" style="color: #965695;">Quiénes Somos</h1>
+        <p class="lead">Somos una librería apasionada por la lectura y la difusión del conocimiento. Fundada en 1982, hemos crecido para convertirnos en la cadena de librerías más grande y antigua de Chile.</p>
+        <p class="lead">Con más de 30 años de experiencia, hemos servido a la comunidad ofreciendo una amplia gama de libros y recursos para lectores de todas las edades e intereses.</p>
+        <p class="lead">Nuestro compromiso es fomentar la pasión por la lectura, brindar acceso a la cultura y ofrecer un espacio cálido y acogedor para nuestros clientes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="{% static 'Tienda.jpg' %}" class="img-fluid" alt="Nuestra Tienda">
+      </div>
+      <div class="col-md-6">
+        <h2 style="color: #965695;">Nuestra Misión</h2>
+        <p>Ser un referente en el mundo de la lectura y la cultura, brindando un servicio excepcional a nuestros clientes, promoviendo la educación y el acceso a la literatura de calidad.</p>
+        <h2 style="color: #965695;">Nuestros Valores</h2>
+        <ul>
+          <li>Excelencia en el servicio al cliente.</li>
+          <li>Pasión por la lectura y la cultura.</li>
+          <li>Compromiso con la comunidad y la educación.</li>
+          <li>Respeto por la diversidad de gustos y necesidades de nuestros clientes.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}
