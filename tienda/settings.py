@@ -10,6 +10,7 @@ y de medios, la configuración de la internacionalización, la configuración de
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Resto del código...
 
@@ -19,9 +20,12 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 
 # Configuración de seguridad
-SECRET_KEY = 'django-insecure-7+jmgn6=#i*ahb2)^jo^=8293fhm6*#4lmf$*_t(-g+n!1$w=3'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your_secret_key')
+DEBUG = 'RENDER' not in os.environ
+ALLOWED_HOSTS = []
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME', default='localhost')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Aplicaciones instaladas
 INSTALLED_APPS = [
@@ -44,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 # Configuración de URLs y plantillas
@@ -68,16 +73,12 @@ TEMPLATES = [
 # Configuración de la aplicación WSGI
 WSGI_APPLICATION = 'tienda.wsgi.application'
 
-# Configuración de la base de datos
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'libreria',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        # Feel free to alter this value to suit your needs.
+        default='postgres://libreria_g0zm_user:iHFxjpV7eTCnE8ezqX0UMAlQD0tODiMg@dpg-cln5n3sjtl8s7397v4og-a/libreria_g0zm',
+        conn_max_age=600
+    )
 }
 
 # Validación de contraseñas
@@ -105,8 +106,20 @@ USE_TZ = True
 # Configuración de archivos estáticos y de medios
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+if not DEBUG:
+    # Tell Django to copy statics to the `staticfiles` directory
+    # in your application directory on Render.
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    # Turn on WhiteNoise storage backend that takes care of compressing static files
+    # and creating unique names for each version so they can safely be cached forever.
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Configuración de la autenticación de usuarios
 LOGIN_URL = '/iniciarSesion'
