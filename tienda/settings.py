@@ -21,8 +21,8 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 # Configuración de seguridad
 SECRET_KEY = os.environ.get('SECRET_KEY', default='your_secret_key')
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['*']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME', default='localhost')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -105,7 +105,13 @@ USE_TZ = True
 
 # Configuración de archivos estáticos y de medios
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+# Crear el directorio staticfiles si no existe
+if not os.path.exists(STATIC_ROOT):
+    os.makedirs(STATIC_ROOT)
+
 
 if not DEBUG:
     # Tell Django to copy statics to the `staticfiles` directory
