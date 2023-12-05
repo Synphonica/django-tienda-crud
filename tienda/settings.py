@@ -15,7 +15,7 @@ import dj_database_url
 # Resto del código...
 
 # Directorios de plantillas y archivos estáticos
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 
@@ -104,9 +104,12 @@ USE_I18N = True
 USE_TZ = True
 
 # Configuración de archivos estáticos y de medios
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Crear el directorio staticfiles si no existe
 if not os.path.exists(STATIC_ROOT):
