@@ -6,9 +6,9 @@
       <div class="mb-3">
           <label for="" class="form-label">{{ campo.label }}</label>
           {% if campo.field.widget.input_type == 'file' and campo.value %}
-              <br/>
-              <img src="{{ MEDIA_URL }}/imagenes/{{ campo.value }}" width="100" alt="" srcset="">
-              <br/>
+            <br/>
+            <img src="{{ campo.value.url }}" width="100" alt="" srcset="">
+            <br/>
           {% endif %}
           {% if campo.name == 'precio' %}
               <input 
