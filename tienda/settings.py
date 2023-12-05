@@ -104,7 +104,7 @@ USE_I18N = True
 USE_TZ = True
 
 # Configuración de archivos estáticos y de medios
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
